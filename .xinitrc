@@ -1,4 +1,4 @@
-xrdb -merge ~/.Xresources
+[[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 
 ## Other Window Managers
 

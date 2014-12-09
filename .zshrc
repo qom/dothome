@@ -1,17 +1,18 @@
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=1000
+
 # The following lines were added by compinstall
 
 zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
 zstyle :compinstall filename '/home/moveek/.zshrc'
 
-autoload -Uz compinit
-compinit
-# End of lines added by compinstall
-# Lines configured by zsh-newuser-install
-HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
-bindkey -v
 # End of lines configured by zsh-newuser-install
+# End of lines added by compinstall
+
+#setopt autocd
+bindkey -v
 
 #####################################################
 
@@ -31,6 +32,7 @@ zstyle ':completion:*' menu select
 # autocompletion of command line switches for aliases
 setopt completealiases
 alias ls='ls --color=auto -F'
+alias pacman='pacman-color'
 
 # CTRL-R history search while keeping vi mode bindings
 # courtesty of: https://bbs.archlinux.org/viewtopic.php?id=52173
