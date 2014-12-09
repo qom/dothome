@@ -39,3 +39,16 @@ bindkey '^R' history-incremental-search-backward
 
 # Use notify-send to alert that something finished
 alias nd='notify-send "DONE"'
+
+# Sync ranger path with shell
+source /usr/share/doc/ranger/examples/bash_automatic_cd.sh
+
+# Set default name of vim server
+export TARGETVIM=GVIM
+
+# Define a ranger-cd ZSH widget. This widget can be used to assign
+# a keyboard shortcut for launching ranger-cd using "bindkey"
+# Not quite working: http://unix.stackexchange.com/questions/79897/how-can-i-use-bindkey-to-run-a-script
+ranger-cd_widget() ranger-cd
+zle -N ranger-cd_widget
+bindkey '^o' ranger-cd
