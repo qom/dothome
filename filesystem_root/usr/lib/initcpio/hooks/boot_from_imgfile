@@ -1,0 +1,28 @@
+# vim: set ft=sh:
+
+run_hook() {
+	# If the img_label was passed in as an initrd argument, then
+	# set img_dev to path of the img once it is loaded to a loop device
+	#[[ -n "${img_label}" ]] && img_dev="/dev/disk/by-label/${img_label}"	
+	if [[ -n "${subvol}" && -n "${img_loop}" ]]; then
+		mount_handler="img_loop_mount_handler"
+	fi
+}
+
+img_loop_mount_handler () {
+	newroot="${1}"
+
+	msg ":: Setup a loop device for ${img_loop} located at device ${img_dev}"
+	mkdir -p "/run/archiso/img_dev"
+	mount -t ntfs-3g "$root" "/run/archiso/img_dev"
+	
+	#_dev_loop=$(losetup --find --show --read-only "/run/archiso/img_dev/${img_loop}")
+	#archloopdevice="${_dev_loop}"
+
+	msg ":: Mount root image from loop device onto newroot"
+
+	#mount -o subvol="${subvol}" ${archloopdevice}" "${newroot}" 
+	mount -o subvol="${subvol}" /run/archiso/img_dev/"${img_loop}" "${newroot}" 
+
+}
+

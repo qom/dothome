@@ -1,0 +1,21 @@
+#!/bin/bash
+
+build() {
+    add_module "fuse"
+    add_module "loop"
+
+    add_runscript
+    
+    add_binary losetup
+    add_binary mount.ntfs-3g
+
+}
+
+help() {
+    cat <<HELPEOF
+This hook provides the ability to boot a root filesystem from an
+img file that gets mounted to a loop back device.
+HELPEOF
+}
+
+# vim: set ft=sh ts=4 sw=4 et:
