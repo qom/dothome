@@ -12,17 +12,10 @@ run_hook() {
 img_loop_mount_handler () {
 	newroot="${1}"
 
-	msg ":: Setup a loop device for ${img_loop} located at device ${img_dev}"
-	mkdir -p "/run/archiso/img_dev"
-	mount -t ntfs-3g "$root" "/run/archiso/img_dev"
+	msg ":: Mount device ${root} containing the rootfs img at ${img_loop}. newroot is ${newroot}."
+	mount -t ntfs-3g "$root" "${newroot}"
 	
-	#_dev_loop=$(losetup --find --show --read-only "/run/archiso/img_dev/${img_loop}")
-	#archloopdevice="${_dev_loop}"
-
 	msg ":: Mount root image from loop device onto newroot"
-
-	#mount -o subvol="${subvol}" ${archloopdevice}" "${newroot}" 
-	mount -o subvol="${subvol}" /run/archiso/img_dev/"${img_loop}" "${newroot}" 
-
+	mount -t btrfs -osubvol="${subvol}" "${newroot}/${img_loop}" "${newroot}" 
 }
 
