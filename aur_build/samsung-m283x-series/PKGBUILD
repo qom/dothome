@@ -1,4 +1,5 @@
-# Maintainer: Bernhard Landauer <oberon@manjaro.org>
+# Based on PKGBUILD by Bernhard Landauer <oberon@manjaro.org>. Modified by Oveek.
+ 
 
 pkgname=samsung-m283x-series
 pkgver=1.00.36
