@@ -1,0 +1,88 @@
+# Maintainer: Bernhard Landauer <oberon@manjaro.org>
+
+pkgname=samsung-m283x-series
+pkgver=1.00.36
+pkgrel=1
+pkgdesc="CUPS printer driver for Samsung ML-283x Series"
+arch=('i686' 'x86_64')
+url="http://www.samsung.com"
+license=('custom:samsung')
+depends=('cups' 'ghostscript')
+source=("http://org.downloadcenter.samsung.com/downloadfile/content/DR/201510/20151028114223651/uld_v1.00.36_00.91.tar.gz")
+md5sums=('ba1d213aa726efaf20c1b31f4da9fcdc')
+
+package() {
+	cd $srcdir
+
+	install -m 644 -D \
+		${srcdir}/uld/noarch/share/ppd/Samsung_M283x_Series.ppd \
+		${pkgdir}/usr/share/cups/model/Samsung_M283x_Series.ppd
+
+	install -m 644 -D \
+		${srcdir}/uld/noarch/share/ppd/Samsung_M283x_Series.ppd \
+		${pkgdir}/usr/share/ppd/cupsfilters/Samsung_M283x_Series.ppd
+
+	
+
+	if [ "$CARCH" = "x86_64" ]; then
+		install -m 755 -D \
+			${srcdir}/uld/x86_64/smfpnetdiscovery \
+			${pkgdir}/opt/smfp-common/printer/bin/smfpnetdiscovery
+
+		install -m 755 -d "${pkgdir}/usr/lib/cups/backend"
+
+		ln -s "/opt/smfp-common/printer/bin/smfpnetdiscovery" \
+			"${pkgdir}/usr/lib/cups/backend/smfpnetdiscovery"
+
+		install -m 755 -D \
+			${srcdir}/uld/x86_64/rastertospl \
+			${pkgdir}/opt/smfp-common/printer/bin/rastertospl
+
+		install -m 755 -d "${pkgdir}/usr/lib/cups/filter"
+
+		ln -s "/opt/smfp-common/printer/bin/rastertospl" \
+			"${pkgdir}/usr/lib/cups/filter/rastertospl"
+
+		install -m 755 -D \
+			${srcdir}/uld/x86_64/pstosecps \
+			${pkgdir}/opt/smfp-common/printer/bin/pstosecps
+
+		ln -s "/opt/smfp-common/printer/bin/pstosecps" \
+			"${pkgdir}/usr/lib/cups/filter/pstosecps"
+
+		
+		install -m 755 -D \
+			${srcdir}/uld/x86_64/libscmssc.so \
+			${pkgdir}/opt/smfp-common/printer/lib/libscmssc.so
+
+	
+	else
+		
+		install -m 755 -D \
+			${srcdir}/uld/i386/smfpnetdiscovery \
+			${pkgdir}/opt/smfp-common/printer/bin/smfpnetdiscovery
+
+		ln -s "/opt/smfp-common/printer/bin/smfpnetdiscovery" \ 
+			"${pkgdir}/usr/lib/cups/backend/smfpnetdiscovery"
+
+		install -m 755 -D \
+			${srcdir}/uld/i386/rastertospl \
+			${pkgdir}/opt/smfp-common/printer/bin/rastertospl
+
+		ln -s "/opt/smfp-common/printer/bin/rastertospl" \
+			"${pkgdir}/usr/lib/cups/filter/rastertospl"
+
+		install -m 755 -D \
+			${srcdir}/uld/i386/pstosecps \
+			${pkgdir}/opt/smfp-common/printer/bin/pstosecps
+
+		ln -s "/opt/smfp-common/printer/bin/pstosecps" \
+			"${pkgdir}/usr/lib/cups/filter/pstosecps"
+
+		
+		install -m 755 -D \
+			${srcdir}/uld/i386/libscmssc.so \
+			${pkgdir}/opt/smfp-common/printer/lib/libscmssc.so
+
+	fi
+}
