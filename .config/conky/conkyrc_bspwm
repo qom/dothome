@@ -1,0 +1,92 @@
+-- vim: ts=4 sw=4 noet ai cindent syntax=lua
+--==============================================================================
+--                               conkyrc_bspwm
+--
+--  author  : SLK
+--  version : v2011011601
+--  license : Distributed under the terms of GNU GPL version 2 or later
+--
+--==============================================================================
+
+conky.config = {
+	background = false,
+	update_interval = 1,
+
+	cpu_avg_samples = 2,
+	net_avg_samples = 2,
+	temperature_unit = celsius,
+
+	double_buffer = true,
+	no_buffers = true,
+	text_buffer_size = 2048,
+
+	gap_x = 30,
+	gap_y = 30,
+	minimum_width = 500,
+	minimum_height = 190,
+	maximum_width = 500,
+	own_window = true,
+	--own_window_type = 'override',
+	--own_window_transparent = true,
+	own_window_argb_visual = true, -- Enables transparency with a compositing manager like xcompmgr.
+	own_window_argb_value = 200, -- use this to modify the alpha value used. Valid range is 0-255, where 0 is 0% opacity, and 255 is 100% opacity.
+	own_window_hints = 'undecorated,sticky,skip_taskbar,skip_pager,above',
+	border_inner_margin = 5,
+	--border_outer_margin = 0,
+	alignment = 'top_right',
+
+	draw_shades = false,
+	draw_outline = false,
+	draw_borders = false,
+	draw_graph_borders = false,
+
+	override_utf8_locale = true,
+	use_xft = true,
+	font = 'terminus:size=14',
+	xftalpha = 0.5,
+	uppercase = false,
+
+	default_color = 'FFFFFF',
+	color1 = '#9ACD32',
+	color2 = 'AAAAAA',
+	color3 = '888888',
+	color4 = 'EF5A29',
+
+	lua_load = '~/.config/conky/conky_bspwm.lua',
+	--lua_draw_hook_pre = '_list_window_names',
+}
+
+
+conky.text = [[
+
+
+${color3}${alignc -3}${font DotMatrix:size=20}${time %H:%M}	
+${font}${color1}${alignc}${voffset -10}${time %A}
+${voffset 10}${color1}Date:${color2}${alignr}${time %d/%m/%y}
+${color1}${font}Battery:${color2}${alignr}${battery_percent BAT0}%
+${hr}
+${color1}${alignc}workspace ${color2}${exec bspc query -D -d focused}
+
+${color1}workspace 0
+${color3}${lua list_window_names 0}
+${color1}workspace 1
+${color3}${lua list_window_names 1}${offset}
+${color1}workspace 2
+${color3}${lua list_window_names 2}
+${color1}workspace 3
+${color3}${lua list_window_names 3}
+${color1}workspace 4
+${color3}${lua list_window_names 4}
+${color1}workspace 5
+${color3}${lua list_window_names 5}
+${color1}workspace 6
+${color3}${lua list_window_names 6}
+${color1}workspace 7
+${color3}${lua list_window_names 7}
+${color1}workspace 8
+${color3}${lua list_window_names 8}
+${color1}workspace 9
+${color3}${lua list_window_names 9}
+
+]]
+
