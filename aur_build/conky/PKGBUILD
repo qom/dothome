@@ -27,7 +27,6 @@ options=('!strip' 'debug')
 prepare() {
 	cd "${srcdir}/${_pkgname}-${pkgver}"
 	patch -p1 -i ../lua53.patch # lua_gettable returns an int in lua-5.3
-	patch -p1 -i ../update_tolua_platform_check.patch
 }
 
 build() {
@@ -37,16 +36,17 @@ build() {
 		-D CMAKE_BUILD_TYPE=Release \
 		-D MAINTAINER_MODE=ON \
 		-D BUILD_CURL=ON \
+		-D BUILD_XDAMAGE=OFF \
 		-D BUILD_XDBE=ON \
 		-D BUILD_IMLIB2=ON \
 		-D BUILD_RSS=ON \
 		-D BUILD_WEATHER_METAR=ON \
 		-D BUILD_WEATHER_XOAP=ON \
 		-D BUILD_WLAN=ON \
-		-D BUILD_LUA=ON \
 		-D BUILD_LUA_CAIRO=ON \
 		-D BUILD_LUA_IMLIB2=ON \
 		-D BUILD_LUA_RSVG=ON \
+		-D BUILD_CMUS=ON \
 		-D CMAKE_INSTALL_PREFIX=/usr \
 		.
 
