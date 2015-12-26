@@ -24,6 +24,7 @@ function conky_list_window_names(workspace_num)
 		winnames = ""
 	else
 		winnames = os.capture("xtitle "..winids, true)
+		winnames = string.gsub(winnames, "conky [(]surfacenix[)][\n\r]", '')
 	end
 
 	return winnames
