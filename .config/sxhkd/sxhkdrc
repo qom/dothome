@@ -78,6 +78,13 @@ alt + !button{1-3}
 alt + @button{1-3}
     bspc pointer -u
 
+# Control Conky
+#super
+alt + shift + backslash
+    xdotool search --onlyvisible --classname 'Conky' windowunmap \ 
+    || xdotool search --classname 'Conky' windowmap \ 
+    || conky -q -c ~/.config/conky/conkyrc_bspwm &
+
 #
 # wm independent hotkeys
 #
