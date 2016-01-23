@@ -1,5 +1,6 @@
 # Maintainer: Vlad M. <vlad@archlinux.net>
 # Contributor: pisuka <tekmon@gmail.com>
+# Modified: Oveek
 
 pkgname=heroku-toolbelt
 _pkgname=heroku-client
