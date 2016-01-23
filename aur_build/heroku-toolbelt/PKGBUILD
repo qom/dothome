@@ -1,0 +1,41 @@
+# Maintainer: Vlad M. <vlad@archlinux.net>
+# Contributor: pisuka <tekmon@gmail.com>
+
+pkgname=heroku-toolbelt
+_pkgname=heroku-client
+pkgver=3.42.29
+pkgrel=1
+pkgdesc="Everything you need to get started using Heroku (including foreman)"
+arch=('any')
+url="https://toolbelt.heroku.com"
+license=('MIT' 'APACHE' 'RUBY' 'PerlArtistic' 'GPL' 'custom')
+depends=("ruby>=1.9")
+optdepends=('git')
+conflicts=('ruby-heroku' 'ruby-foreman' 'heroku-client')
+source=('https://s3.amazonaws.com/assets.heroku.com/heroku-client/heroku-client.tgz')
+sha256sums=('1c174580a895ec4b446ab2d4837d00e731362dd4ee46268251e2cc7d99d077d9')
+
+package() {
+  cd $srcdir/$_pkgname
+
+  HEROKU_LIBDIR=usr/lib/heroku
+
+  # Note: Order of the two sed commands below matters. The relative paths are
+  # relative to the heroku ruby script that gets installed to /usr/bin/heroku.
+
+  # Change libpath to point to /usr/lib/heroku 
+  sed -i 's|\(\.\./\.\./lib\)|\1/heroku|' bin/heroku  
+
+  # This package will install the vendor gems directory to /usr/lib/heroku/vendor/gems
+  sed -i 's|vendor/gems|lib/heroku/vendor/gems|' bin/heroku
+
+  install -D -m755 bin/heroku $pkgdir/usr/bin/heroku
+  install -d -m755 $pkgdir/${HEROKU_LIBDIR}/vendor
+  cp -r vendor/gems $pkgdir/${HEROKU_LIBDIR}/vendor
+
+  cp -r lib/heroku $pkgdir/${HEROKU_LIBDIR}
+  cp -r lib/vendor $pkgdir/${HEROKU_LIBDIR}
+  install -D -m755 lib/heroku.rb $pkgdir/${HEROKU_LIBDIR}
+  install -d -m755 data $pkgdir/${HEROKU_LIBDIR}
+  cp -r data $pkgdir/${HEROKU_LIBDIR}
+}
