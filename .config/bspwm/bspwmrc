@@ -15,6 +15,6 @@ bspc rule -a Chromium desktop=^2
 bspc rule -a mplayer2 floating=on
 bspc rule -a Kupfer.py focus=on
 bspc rule -a Screenkey manage=off
-bspc rule -a conky floating=on border=off focus=off
+bspc rule -a conky state=floating border=off focus=off
 
-panel dzen2 &
+#panel dzen2 &

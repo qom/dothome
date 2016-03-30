@@ -15,7 +15,7 @@ end
 function conky_list_window_names(workspace_num)
 
 	-- Use bspc to query list of windows on supplied workspace number
-	local winids = ""..os.capture("bspc query -W -d ^" .. workspace_num, true)
+	local winids = ""..os.capture("bspc query -N -d ^" .. workspace_num, true)
 	winids = string.gsub(winids, '[\n\r]+', ' ')
 
 	-- xtitle takes window ids and returns window titles.
