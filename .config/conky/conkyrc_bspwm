@@ -62,31 +62,30 @@ conky.text = [[
 
 ${color3}${alignc -3}${font DotMatrix:size=20}${time %H:%M}	
 ${font}${color1}${alignc}${voffset -10}${time %A}
-${voffset 10}${color1}Date:${color2}${alignr}${time %d/%m/%y}
-${color1}${font}Battery:${color2}${alignr}${battery_percent BAT0}%
+${voffset 10}${color1}Date:${color2}${alignr}${time %m/%d/%y}
 ${hr}
-${color1}${alignc}workspace ${color2}${exec bspc query -D -d focused}
+${color1}${alignc}workspace ${color2}${lua get_current_workspace_name}
 
-${color1}workspace ${exec bspc query -D -d eDP1:^10}
-${color3}${lua list_window_names 10}
-${color1}workspace ${exec bspc query -D -d eDP1:^1}
+${color1}workspace ${lua get_workspace_name 1} 
 ${color3}${lua list_window_names 1}${offset}
-${color1}workspace ${exec bspc query -D -d eDP1:^2}
+${color1}workspace ${lua get_workspace_name 2} 
 ${color3}${lua list_window_names 2}
-${color1}workspace ${exec bspc query -D -d eDP1:^3}
+${color1}workspace ${lua get_workspace_name 3} 
 ${color3}${lua list_window_names 3}
-${color1}workspace ${exec bspc query -D -d eDP1:^4}
+${color1}workspace ${lua get_workspace_name 4} 
 ${color3}${lua list_window_names 4}
-${color1}workspace ${exec bspc query -D -d eDP1:^5}
+${color1}workspace ${lua get_workspace_name 5} 
 ${color3}${lua list_window_names 5}
-${color1}workspace ${exec bspc query -D -d eDP1:^6}
+${color1}workspace ${lua get_workspace_name 6} 
 ${color3}${lua list_window_names 6}
-${color1}workspace ${exec bspc query -D -d eDP1:^7}
+${color1}workspace ${lua get_workspace_name 7} 
 ${color3}${lua list_window_names 7}
-${color1}workspace ${exec bspc query -D -d eDP1:^8}
+${color1}workspace ${lua get_workspace_name 8} 
 ${color3}${lua list_window_names 8}
-${color1}workspace ${exec bspc query -D -d eDP1:^9}
+${color1}workspace ${lua get_workspace_name 9} 
 ${color3}${lua list_window_names 9}
+${color1}workspace ${lua get_workspace_name 10} 
+${color3}${lua list_window_names 10}
 
 ]]
 
