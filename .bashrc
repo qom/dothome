@@ -8,6 +8,8 @@
 alias ls='ls --color=auto'
 PS1='[\u@\h \W]\$ '
 
+export PATH=$PATH:$HOME/scripts
+
 # If this is an xterm set the title to user@host:dir
 # From: https://mg.pov.lt/blog/bash-prompt.html 
 case "$TERM" in
@@ -36,3 +38,6 @@ xterm*|rxvt*)
 *)
     ;;
 esac
+
+# Start fasd (quick access to recent files and directories)
+eval "$(fasd --init auto)"
