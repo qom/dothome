@@ -1,4 +1,12 @@
 #!/bin/bash
 
+#cd "/project/wiki/tw5notes/"
+#tiddlywiki --server 8081 & echo $! > /tmp/tw5notes.pid
 cd "/mnt/win/Users/Oveek/Documents/wiki/tw5notes/"
-tiddlywiki --server 8081 & echo $! > /tmp/tw5notes.pid
+
+# Can just use `hostname` to listen on external ip rather than using ip addr.
+#external_ip=`ip addr | grep -oE "192.[[:digit:]]+.[0-9]+.[0-9]+/"`
+#external_ip=${external_ip%/}
+#echo "Determined external IP address: ${external_ip}"
+tiddlywiki --server 8081 $:/core/save/all text/plain text/html "" "" localhost & echo $! > /tmp/tw5notes.pid
+echo "Started tw5notes on localhost."
