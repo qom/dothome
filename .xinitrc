@@ -7,6 +7,8 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
  unset f
 fi
 
+[[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources
+
 ## Other Window Managers
 
 #wmname LG3D
@@ -19,6 +21,7 @@ fi
 #export PANEL_FIFO="/tmp/panel-fifo"
 #export PANEL_HEIGHT=10
 #export PATH=$PATH:/home/moveek/.config/bspwm
+#export _JAVA_AWT_WM_NONREPARENTING=1
 
 #xrandr --output eDP1 --auto --scale 0.8x0.8
 
@@ -29,6 +32,7 @@ fi
 
 feh --bg-center /home/moveek/walls/ArchMetal_2160x1440.png
 xsetroot -cursor_name left_ptr
-xcompmgr &
-sxhkd -f 100 &
+#hsetroot -solid "#000000" # Fix for gray background from xcompmgr
+#xcompmgr -c &
+sxhkd &
 exec bspwm
