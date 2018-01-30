@@ -1,0 +1,11 @@
+#!/bin/bash
+
+cd $HOME/dothome
+
+for f in `find . -type f`;do
+    target=$HOME/${f#./};
+    if [ -e $target ]; then
+        diff -q $target $f
+    fi
+done
+    
