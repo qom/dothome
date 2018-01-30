@@ -6,6 +6,7 @@ RequiresMountsFor=/mnt/win/Users/Oveek/Documents/wiki/tw5notes/
 Type=forking
 ExecStart=/home/moveek/scripts/start_tw5notes
 PIDFile=/tmp/tw5notes.pid
+StandardOutput=syslog+console
 
 [Install]
 WantedBy=default.target
