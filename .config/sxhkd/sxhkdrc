@@ -128,8 +128,15 @@ alt + {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}
 
 #
-# conky status window toggle
+# custom bindings
 #
+
+# toggle keep-alive
+ctrl + alt + shift + k
+	(kill -9 `cat /tmp/xcontrolmouse.pid` && rm /tmp/xcontrolmouse.pid && notify-send -t 5000 "toggle" "disabled keep-alive") \
+	|| ($HOME/scripts/xcontrolmouse & echo $! > /tmp/xcontrolmouse.pid && notify-send -t 5000 "toggle" "enabled keep-alive")	
+
+# conky status window toggle
 alt + backslash
     (xdotool search --onlyvisible --classname 'Conky' windowunmap && kill -SIGSTOP `cat /tmp/conky.pid`)  \
     || (xdotool search --classname 'Conky' windowmap && kill -SIGCONT `cat /tmp/conky.pid`) \
