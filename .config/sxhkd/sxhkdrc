@@ -14,6 +14,13 @@ alt + space
 alt + Escape
 	pkill -USR1 -x sxhkd
 
+# disable alt + Tab in bspwm when using citrix
+alt + ctrl + Escape
+	CONF=$HOME/.config/sxhkd/sxhkdrc \
+	&&((grep -q "^# focus the last node/desktop" $CONF) && (sed -ie '/^# focus the last node/,+2 s/^/#/'  $CONF) && (notify-send -t 5000 "toggle" "disable alt + tab in bspwm")) \
+	|| ((grep -q "^## focus the last node/desktop" $CONF) && (sed -ie '/^## focus the last node/,+2 s/^#//'  $CONF) && (notify-send -t 5000 "toggle" "re-enable alt + tab in bspwm")) \
+	&& pkill -USR1 -x sxhkd
+
 #
 # bspwm hotkeys
 #
@@ -121,8 +128,15 @@ alt + {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}
 
 #
-# conky status window toggle
+# custom bindings
 #
+
+# toggle keep-alive
+ctrl + alt + shift + k
+	(kill -9 `cat /tmp/xcontrolmouse.pid` && rm /tmp/xcontrolmouse.pid && notify-send -t 5000 "toggle" "disabled keep-alive") \
+	|| ($HOME/scripts/xcontrolmouse & echo $! > /tmp/xcontrolmouse.pid && notify-send -t 5000 "toggle" "enabled keep-alive")	
+
+# conky status window toggle
 alt + backslash
     (xdotool search --onlyvisible --classname 'Conky' windowunmap && kill -SIGSTOP `cat /tmp/conky.pid`)  \
     || (xdotool search --classname 'Conky' windowmap && kill -SIGCONT `cat /tmp/conky.pid`) \
