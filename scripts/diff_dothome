@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# A POSIX variable
+OPTIND=1         # Reset in case getopts has been used previously in the shell.
+
+# Initialize our own variables:
+output_file=""
+verbose=0
+
+function show_help () {
+	echo "Arguments: "
+	echo
+	echo "  -h	show help"
+	echo "  -d	diff files in dothome repo and $HOME dir"
+	echo "  -f	list files that are only in either $HOME dir or dothome repo"
+}
+
+function diff_dothome_and_home_files() {
+	cd $HOME/dothome
+
+	for f in `find . -type f`;do
+		target=$HOME/${f#./};
+		if [ -e $target ]; then
+			diff -q $target $f
+		fi
+	done
+}
+
+function find_missing_files() {
+	diff -rq -xdothome  ~/ ~/dothome/ | sed '/^Files/d'
+}
+
+while getopts "h?df" opt; do
+    case "$opt" in
+    h|\?)
+        show_help
+        exit 0
+        ;;
+    d)  diff_dothome_and_home_files
+        ;;
+    f)  find_missing_files
+        ;;
+    esac
+done
