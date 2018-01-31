@@ -1,0 +1,11 @@
+[Unit]
+Description=TiddlyWiki5 Notes wiki
+RequiresMountsFor=/mnt/win/Users/Oveek/Documents/wiki/tw5notes/
+
+[Service]
+Type=forking
+ExecStart=/home/moveek/scripts/start_tw5notes
+PIDFile=/tmp/tw5notes.pid
+
+[Install]
+WantedBy=default.target
