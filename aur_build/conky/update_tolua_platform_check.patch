@@ -1,0 +1,32 @@
+From 04f401cc6d00506554e2be92b975899dbcfb3a10 Mon Sep 17 00:00:00 2001
+From: om <om@>
+Date: Wed, 23 Dec 2015 22:59:50 -0500
+Subject: [PATCH] Modify tolua++ cmake platform check.
+
+---
+ cmake/ConkyPlatformChecks.cmake | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/cmake/ConkyPlatformChecks.cmake b/cmake/ConkyPlatformChecks.cmake
+index 2bf4c0a..9f010f4 100644
+--- a/cmake/ConkyPlatformChecks.cmake
++++ b/cmake/ConkyPlatformChecks.cmake
+@@ -365,11 +365,13 @@ if(WANT_LIBXML2)
+ endif(WANT_LIBXML2)
+ 
+ if(WANT_TOLUA)
+-	find_program(APP_TOLUA NAMES tolua++ tolua++5.1 tolua++-5.1)
++	#find_program(APP_TOLUA NAMES tolua++ tolua++5.1 tolua++-5.1)
++	find_program(APP_TOLUA NAMES toluapp)
+ 	if(NOT APP_TOLUA)
+ 		message(FATAL_ERROR "Unable to find program 'tolua++'")
+ 	endif(NOT APP_TOLUA)
+-	find_library(TOLUA_LIBS NAMES tolua++ tolua++5.1 tolua++-5.1)
++	#find_library(TOLUA_LIBS NAMES tolua++ tolua++5.1 tolua++-5.1)
++	find_library(TOLUA_LIBS NAMES toluapp)
+ 	find_path(TOLUA_INCLUDE_PATH tolua++.h ${INCLUDE_SEARCH_PATH})
+ 	if(TOLUA_INCLUDE_PATH AND TOLUA_LIBS)
+ 		set(TOLUA_FOUND true)
+-- 
+2.6.4
+

@@ -1,28 +1,29 @@
 # vim: set ft=sh:
 
+# This hook mounts a root filesystem from an image file on a hard disk partition.
+#
+# The expected initrd parameters are "root", "rootfs_img", "subvol":
+#
+# * root - The disk partition, or host partition containing the img file with the root filesystem to be mounted.
+# * rootfs_img - The path to the img file on the host partition. 
+# * subvol - The BTRFS subvolume to mount from the img file.
+#
+# E.g.: options "root=UUID=1CAC3B88AC3B5B88 subvol=rootvol rootfs_img=archlinux_root/ArchLinuxRoot_122015.img rw"
+
 run_hook() {
-	# If the img_label was passed in as an initrd argument, then
-	# set img_dev to path of the img once it is loaded to a loop device
-	#[[ -n "${img_label}" ]] && img_dev="/dev/disk/by-label/${img_label}"	
-	if [[ -n "${subvol}" && -n "${img_loop}" ]]; then
-		mount_handler="img_loop_mount_handler"
+	# Check that expected flags are populated.
+	if [[ -n "${subvol}" && -n "${rootfs_img}" ]]; then
+		mount_handler="rootfs_img_mount_handler"
 	fi
 }
 
-img_loop_mount_handler () {
+rootfs_img_mount_handler () {
 	newroot="${1}"
 
-	msg ":: Setup a loop device for ${img_loop} located at device ${img_dev}"
-	mkdir -p "/run/archiso/img_dev"
-	mount -t ntfs-3g "$root" "/run/archiso/img_dev"
+	msg ":: Mount device ${root} containing the rootfs img at ${rootfs_img}. newroot is ${newroot}."
+	mount -t ntfs-3g "$root" "${newroot}"
 	
-	#_dev_loop=$(losetup --find --show --read-only "/run/archiso/img_dev/${img_loop}")
-	#archloopdevice="${_dev_loop}"
-
 	msg ":: Mount root image from loop device onto newroot"
-
-	#mount -o subvol="${subvol}" ${archloopdevice}" "${newroot}" 
-	mount -o subvol="${subvol}" /run/archiso/img_dev/"${img_loop}" "${newroot}" 
-
+	mount -t btrfs -osubvol="${subvol}" "${newroot}/${rootfs_img}" "${newroot}" 
 }
 

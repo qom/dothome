@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cd "/project/wiki/tw5notes/"
+tiddlywiki --server 8081 & echo $! > /tmp/tw5notes.pid
+notify-send -t 5000 "tw5notes" "server started"
