@@ -12,6 +12,7 @@ function show_help () {
 	echo
 	echo "  -h	show help"
 	echo "  -d	diff files in dothome repo and $HOME dir"
+	echo "  -r	diff files in dothome and /"
 	echo "  -f	list files that are only in either $HOME dir or dothome repo"
 }
 
@@ -26,11 +27,22 @@ function diff_dothome_and_home_files() {
 	done
 }
 
+function diff_dothome_and_rootfs() {
+	cd $HOME/dothome/filesystem_root
+
+	for f in `find . -type f`;do
+		target=${f#.};
+		if [ -e $target ]; then
+			diff -q $target $f
+		fi
+	done
+}
+
 function find_missing_files() {
 	diff -rq -xdothome  ~/ ~/dothome/ | sed '/^Files/d'
 }
 
-while getopts "h?df" opt; do
+while getopts "h?drf" opt; do
     case "$opt" in
     h|\?)
         show_help
@@ -38,6 +50,8 @@ while getopts "h?df" opt; do
         ;;
     d)  diff_dothome_and_home_files
         ;;
+	r)  diff_dothome_and_rootfs
+		;;
     f)  find_missing_files
         ;;
     esac
