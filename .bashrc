@@ -8,6 +8,10 @@
 alias ls='ls --color=auto'
 PS1='[\u@\h \W]\$ '
 
+# Set vim as editor of choice for git and other applications
+export VISUAL=vim
+export EDITOR="$VISUAL"
+
 # If this is an xterm set the title to user@host:dir
 # From: https://mg.pov.lt/blog/bash-prompt.html 
 case "$TERM" in
