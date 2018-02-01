@@ -5,8 +5,16 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+# Enable git completion and show branch name in bash prompt
+if [ -d /usr/share/git/completion/ ];then
+	. /usr/share/git/completion/git-completion.bash
+	. /usr/share/git/completion/git-prompt.sh
+fi
+
 alias ls='ls --color=auto'
-PS1='[\u@\h \W]\$ '
+PS1="[\u@\h \e[38;5;178m\W\e[38;5;71m\$(__git_ps1 '(%s)')\e[39m]\$ "
+
+export PATH=$PATH:$HOME/scripts
 
 # Set vim as editor of choice for git and other applications
 export VISUAL=vim
