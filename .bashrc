@@ -5,6 +5,7 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+alias aura="sudo aura"
 # Enable git completion and show branch name in bash prompt
 if [ -d /usr/share/git/completion/ ];then
 	. /usr/share/git/completion/git-completion.bash
@@ -12,7 +13,7 @@ if [ -d /usr/share/git/completion/ ];then
 fi
 
 alias ls='ls --color=auto'
-PS1="[\u@\h \e[38;5;178m\W\e[38;5;71m\$(__git_ps1 '(%s)')\e[39m]\$ "
+PS1="\[[\u@\h \e[38;5;178m\W\e[38;5;71m\$(__git_ps1 '(%s)')\e[39m]\$\] "
 
 export PATH=$PATH:$HOME/scripts
 
