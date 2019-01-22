@@ -1,0 +1,17 @@
+#!/bin/bash
+
+ICAFILE=$HOME/Downloads/*.ica
+
+# Scale to an effective resolution of 1800 x 1200
+xrandr --output eDP1 --scale 0.6x0.6
+
+# Set DesiredHRES and DesiredVRES to work around bug causes Citrix Receiver full screen bug in Xorg 1.20
+CUR_RES=`xrandr | head -1 | awk -F ',' '{print $2}' | sed 's/^ current //'`
+HRES=`echo $CUR_RES | awk '{print $1}'`
+VRES=`echo $CUR_RES | awk '{print $3}'`
+sed -i "s|\(DesiredHRES=\)[[:digit:]]*|\1$HRES|" $ICAFILE
+sed -i "s|\(DesiredVRES=\)[[:digit:]]*|\1$VRES|" $ICAFILE
+
+# Start Citrix receiver
+/opt/Citrix/ICAClient/wfica.sh $ICAFILE 
+rm $HOME/Downloads/*.ica
