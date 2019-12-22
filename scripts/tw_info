@@ -1,0 +1,148 @@
+#!/bin/bash
+
+### This script collects the installation details of tiddlywiki on nodejs/npm.
+### The information includes the locations of the node_modules directory, how and where tiddlywiki is installed,
+### and the locations of the wiki directories.
+
+# Make tiddlywiki config directory if it doesn't exist
+CONF_DIR=${HOME}/.config/tiddlywiki
+INFO_FILE=${CONF_DIR}/tiddlywiki.info
+WIKI_LOCATIONS_FILE=${CONF_DIR}/wiki_locations
+SYSTEMD_UNIT=tw5notes
+
+print_to_file() {
+   PROP="${1}"
+   VAL="${2}"
+   printf "${PROP} = ${VAL}\n" >> ${INFO_FILE} 
+}
+
+if [[ -a ${INFO_FILE} && ! $1 = "-u" ]]; then
+    printf "\nSkip generate info file. File exists. Pass -u to regenerate info.\n\n";
+    cat ${INFO_FILE}
+    printf "\n"
+    exit 0;
+fi
+
+mkdir -p ${CONF_DIR}
+echo > ${INFO_FILE}
+
+## Populate base properties ##
+
+# node_modules location
+NODE_MODULES_HOME_PROP="node_modules_home"
+NPM_PATH=`npm | tail -1 | awk '{print $2}'`
+NODE_MODULES_HOME=`dirname ${NPM_PATH}`
+
+
+# tiddlywiki npm package install location
+TW_NODE_MODULE_INSTALL_LOCATION_PROP="tw_node_module_location"
+TW_NODE_MODULE_INSTALL_LOCATION=
+
+if [[ -d ${NODE_MODULES_HOME}/tiddlywiki ]];then
+    TW_NODE_MODULE_INSTALL_LOCATION="${NODE_MODULES_HOME}/tiddlywiki"
+fi
+
+
+# Check if the tiddlywiki npm package is installed and whether it's installed as a symlink
+# to an external path, such as a checkout of the git repo.
+TW_INSTALL_TYPE_PROP="tw_installation_type"
+TW_EXTERNAL_LOCATION_PROP="tw_external_location"
+TW_VERSION_PROP="tw_version"
+
+TW_PKG_INFO=`npm ls -g tiddlywiki | sed '/^$/d' | tail -1`
+TW_INSTALL_TYPE=
+TW_GIT=
+TW_EXTERNAL_LOCATION=
+TW_VERSION=
+
+# If tiddlywiki is not installed then the output of "npm ls" will contain the string "empty".
+if ! [[ $TW_PKG_INFO =~ "empty" ]];then
+    TW_VERSION=`echo $TW_PKG_INFO | awk '{print $2}'`
+
+fi
+
+# determine if tiddlywiki was installed via:
+# 1) npm package directly via npm install
+# 2) link to checked out git directory
+# 3) link to plain extracted src directory (from src zip)."
+if [[ $TW_PKG_INFO =~ "->" ]];then
+   TW_INSTALL_TYPE="external"
+   TW_EXTERNAL_LOCATION=`echo $TW_PKG_INFO | awk '{print $4}'` 
+else
+   TW_INSTALL_TYPE="installed npm package"
+fi
+
+if [[ -d ${TW_EXTERNAL_LOCATION}/.git ]];then
+   TW_INSTALL_TYPE="${TW_INSTALL_TYPE} git repo"
+   TW_GIT="true"
+else
+   TW_INSTALL_TYPE="${TW_INSTALL_TYPE} src repo"
+fi
+
+## Path and symlink summary
+
+BIN_LOCATION=`which tiddlywiki`
+BIN_SYMLINK_DETAIL=`ls -l ${BIN_LOCATION}`
+BIN_SYMLINK_DETAIL="/${BIN_SYMLINK_DETAIL#*/}" # Strip off the permission, owner, date file info
+
+TW_NODE_SYMLINK_DETAIL=`ls -l ${NODE_MODULES_HOME}/tiddlywiki`
+TW_NODE_SYMLINK_DETAIL="/${TW_NODE_SYMLINK_DETAIL#*/}"
+
+## systemd info
+
+SYSTEMD_SERVICE=`systemctl status ${SYSTEMD_UNIT} 2>/dev/null | grep -B2 Loaded`
+SYSTEMD_USER_SERVICE=`systemctl --user status ${SYSTEMD_UNIT} 2>/dev/null | grep -B2 Loaded`
+
+
+## Print tiddlywiki info to file
+printf "Path summary: \n\n" >> ${INFO_FILE}
+printf "${BIN_SYMLINK_DETAIL}\n" >> ${INFO_FILE}
+printf "${TW_NODE_SYMLINK_DETAIL}\n\n" >> ${INFO_FILE}
+printf "\n" >> ${INFO_FILE}
+
+printf "Systemd: \n\n" >> ${INFO_FILE}
+
+if [[ ${SYSTEMD_SERVICE} =~ "Loaded" ]]; then 
+    printf "${SYSTEMD_SERVICE}" >> ${INFO_FILE}
+fi
+
+if [[ ${SYSTEMD_USER_SERVICE} =~ "Loaded" ]]; then 
+    printf "${SYSTEMD_USER_SERVICE}" >> ${INFO_FILE}
+fi
+
+printf "\n\n" >> ${INFO_FILE}
+
+
+printf "Path Detail: \n\n" >> ${INFO_FILE}
+print_to_file "${NODE_MODULES_HOME_PROP}" "${NODE_MODULES_HOME}"
+print_to_file "${TW_NODE_MODULE_INSTALL_LOCATION_PROP}" "${TW_NODE_MODULE_INSTALL_LOCATION}"
+print_to_file "${TW_INSTALL_TYPE_PROP}" "${TW_INSTALL_TYPE}"
+print_to_file "${TW_EXTERNAL_LOCATION_PROP}" "${TW_EXTERNAL_LOCATION}"
+print_to_file "${TW_VERSION_PROP}" "${TW_VERSION}"
+printf "\n" >> ${INFO_FILE}
+
+if [[ ${TW_GIT} = "true" ]];then
+    printf "Git Branches: \n\n" >> ${INFO_FILE}
+    BRANCHES=`git -C ${TW_EXTERNAL_LOCATION} branch`
+    printf "${BRANCHES}\n" >> ${INFO_FILE} 
+    printf "\n" >> ${INFO_FILE}
+fi
+
+
+## Print wiki locations
+
+printf "Wiki Locations: \n\n" >> ${INFO_FILE}
+
+for WIKI in `cat ${WIKI_LOCATIONS_FILE}`;do
+
+    FILE_DETAIL=`ls -l ${WIKI}`
+    FILE_DETAIL="/${FILE_DETAIL#*/}"
+    printf "${FILE_DETAIL}" >> ${INFO_FILE}
+
+done
+
+printf "\n" >> ${INFO_FILE}
+
+cat ${INFO_FILE}
+
+printf "\n";
