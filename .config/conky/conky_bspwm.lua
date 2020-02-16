@@ -13,8 +13,7 @@ function conky_list_window_names(workspace_num)
 		winnames = ""
 	else
 		winnames = os.capture("xtitle "..winids, true)
-		-- filter out conky show it doesn't show up in the list of windows
-		winnames = string.gsub(winnames, "conky [(]surfacenix[)][\n\r]", '')
+		winnames = string.gsub(winnames, "conky [(]miniom[)][\n\r]", '')
 	end
 
 	local winnames_t = splitstr(winnames, "\n\r")
