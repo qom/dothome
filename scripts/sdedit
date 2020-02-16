@@ -1,5 +1,0 @@
-#!/bin/bash
-
-wmname LG3D
-java -jar /opt/sdedit/sdedit-4.01.jar &
-
