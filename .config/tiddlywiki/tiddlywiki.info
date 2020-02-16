@@ -1,0 +1,28 @@
+
+Path summary: 
+
+/usr/bin/tiddlywiki -> ../lib/node_modules/tiddlywiki/tiddlywiki.js
+/usr/lib/node_modules/tiddlywiki -> /project/git/TiddlyWiki5
+
+
+Systemd: 
+
+● tw5notes.service - TiddlyWiki5 Notes wiki
+   Loaded: loaded (/home/moveek/.config/systemd/user/tw5notes.service; enabled; vendor preset: enabled)
+
+Path Detail: 
+
+node_modules_home = /usr/lib/node_modules
+tw_node_module_location = /usr/lib/node_modules/tiddlywiki
+tw_installation_type = external git repo
+tw_external_location = /project/git/TiddlyWiki5
+tw_version = tiddlywiki@5.1.22-prerelease
+
+Git Branches: 
+
+  fix-syncer
+* master
+
+Wiki Locations: 
+
+/project/wiki -> /mnt/win/Users/keevo/Documents/wiki
