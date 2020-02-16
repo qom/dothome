@@ -1,0 +1,8 @@
+#!/bin/bash
+
+SECONDARY_MONITOR=`xrandr | grep " connected [^primary]" | awk '{print $1}'`
+if [ -n "$SECONDARY_MONITOR" ]; then
+	PRIMARY_MONITOR=`xrandr | grep " connected primary" | awk '{print $1}'`
+	xrandr --output $SECONDARY_MONITOR --auto
+	xrandr --output $SECONDARY_MONITOR --right-of $PRIMARY_MONITOR
+fi
