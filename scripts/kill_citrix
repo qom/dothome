@@ -1,0 +1,3 @@
+#!/bin/bash
+
+kill -9 `ps aux | grep wfica | head -2 | awk '{print }'`
