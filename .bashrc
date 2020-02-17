@@ -26,7 +26,7 @@ PS1="[\u@\h \e[38;5;178m\W\e[38;5;71m\$(__git_ps1 '(%s)')\e[39m]\$ "
 # PS1='[\u@\h \W]\$ '
 
 # Start fasd (quick access to recent files and directories)
-eval "$(fasd --init auto)"
+# eval "$(fasd --init auto)"
 
 #
 # aliases 
