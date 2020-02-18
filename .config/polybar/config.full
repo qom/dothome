@@ -1,7 +1,7 @@
 ;-------------------------------------------------
 ;                                                ;
 ;           Polybar config for my themes         ;
-; 				                                 ;
+; 				                 ;
 ;                                                ;
 ;-------------------------------------------------
 
@@ -27,66 +27,118 @@ my_color13	= ${xrdb:color13}
 my_color14	= ${xrdb:color14}
 my_color15	= ${xrdb:color15}
 
-foreground-alt = ${xrdb:color8}
-primary = ${xrdb:color1:#6699CC}
-secondary = ${xrdb:color6:#C594C5}
-selected = ${xrdb:color3}
-alert = ${xrdb:color9:#EC5f67}
-
-
-[global/wm]
-margin-top = 5
-margin-bottom = 5
-
 [bar/main_bar]
 ;monitor = ${env:MONITOR:HDMI-1}
 monitor = ${env:MONITOR:eDP1}
 bottom = true
+;width = 90%
 width = 100%
-height = 40
+height = 30
+;offset-x = 5%
+;offset-y = 1%
 offset-x = 0
 offset-y = 0
+radius = 0.0
+fixed-center = true
+
 
 background = ${colors.my_background}
+;foreground = ${colors.my_foreground}
 foreground =  ${colors.my_foreground}
 
-line-size = 2
-line-color = ${colors.secondary}
+line-size = 4
+line-color = ${colors.my_color4}
 
 border-size = 0
-border-color = ${colors.primary}
+border-color = ${colors.my_color4}
 
-spacing=1
-padding-left = 2
-padding-right = 2
-module-margin-left = 1
-module-margin-right = 1
+padding-left = 0
+padding-right = 0
+
+module-margin-left = 0
+module-margin-right = 0
 
 font-0 = Hack:fontformat=truetype:size=14;1
-font-1 = FontAwesome:fontformat=truetype:size=14;1
-font-2 = Siji:pixelsize=10;0
-font-3 = icomoon\-feather:style=Regular:size=14;3
+font-1 = Hack:fontformat=truetype:size=14;1
+font-2 = FontAwesome:fontformat=truetype:size=14;1
 
-modules-left = i3
-modules-right = wlan xbacklight battery date pulseaudio
+modules-left = i3 xwindow
+;modules-center = date 
+;modules-right = musicinfo xbacklight battery
+modules-right = xbacklight battery date
 
 tray-position = right
-tray-padding = 2
+tray-padding = 9
+tray-transparent = false
+tray-offset-y = 0%
+tray-offset-x = 0%
+tray-maxsize = 18
+tray-detached = false
+tray-background = ${colors.my_background}
+#tray-underline = ${colors.my_color4}
 
+;wm-restack = bspwm
 wm-restack = i3
 
 ;override-redirect = true
 
+;scroll-up = bspwm-desknext
+;scroll-down = bspwm-deskprev
+
 ;scroll-up = i3wm-wsnext
 ;scroll-down = i3wm-wsprev
 
+
+;[module/weather]
+;type = custom/script
+;interval = 60
+
+;format-background = ${colors.background-mod1}
+;format = <label>
+;format-prefix = " ⁣   "
+;format-suffix = "  "
+;format-prefix-foreground = ${colors.foreground-alt}
+;exec = python ~/.config/polybar/weather.py
+
+
+;[module/mpd]
+;type = internal/mpd
+
+;interval = 1
+
+;format-offline-background = ${colors.background}
+;format-online-background = ${colors.background-mod0}
+;toggle-off-foreground = #FF0000
+;toggle-on-foreground = #FF0000
+
+
+;host = 127.0.0.1
+;port = 6600
+
+;format-online =  " ⁣  <label-song>  "
+;format-offline =
+;format-stop =
+
+
 [module/i3]
 type = internal/i3
-format = <label-state> <label-mode>
-
 ;
 ;strip-wsnumbers = true
 ;
+;label-focused-padding = 3
+;label-unfocused-padding = 3
+;
+;label-focused-background = ${colors.background-alt}
+label-unfocused-background = ${colors.my_background}
+label-unfocused-foreground = ${colors.my_foreground}
+;label-unfocused-underline = ${colors.my_foreground}
+;
+;label-mode-padding = 0
+;label-mode-background = ${colors.background-unf}
+;
+;label-visible-underline = ${colors.my_background}
+;label-visible-padding = 4
+
 
 ; Available tokens:
 ;   %mode%
@@ -102,8 +154,9 @@ label-mode-background = ${colors.my_color4}
 ;   %output%
 ; Default: %icon%  %name%
 label-focused = %index%
+;label-focused-foreground = ${colors.my_foreground}
 label-focused-foreground = ${colors.my_foreground}
-label-focused-background = #3f3f3f
+label-focused-background = ${colors.my_background}
 label-focused-underline = ${colors.my_color4}
 label-focused-padding = 2
 
@@ -114,8 +167,6 @@ label-focused-padding = 2
 ; Default: %icon%  %name%
 label-unfocused = %index%
 label-unfocused-padding = 2
-label-unfocused-foreground = ${colors.my_foreground}
-label-unfocused-background = ${colors.my_background}
 
 ; Available tokens:
 ;   %name%
@@ -137,20 +188,16 @@ label-urgent-background = ${colors.my_background}
 label-urgent-underline = ${colors.my_color8}
 label-urgent-padding = 2
 
-[module/wlan]
-type = internal/network
-interface = wlp60s0
-interval = 3.0
 
-format-connected-prefix = ""
-format-connected-prefix-foreground = ${colors.foreground-alt}
-format-underline = ${colors.my_color5}
+;[module/wlan]
+;type = internal/network
+;interface = wlo1
+;interval = 3.0
 
-format-connected-background = ${colors.my_background}
+;format-connected-background = ${colors.my_background}
 ;format-connected = "<ramp-signal><label-connected>"
-format-connected = "<label-connected>"
-format-connected-underline = #9f78e1
-label-connected = " %local_ip%"
+;format-connected-underline = #9f78e1
+;label-connected =
 
 ;format-disconnected = <label-disconnected>
 ;format-disconnected-underline = ${self.format-connected-underline}
@@ -163,6 +210,23 @@ label-connected = " %local_ip%"
 ;ramp-signal-3 = 4
 ;ramp-signal-4 = 5
 ;ramp-signal-foreground = ${colors.my_foreground}
+
+
+;[module/eth]
+;type = internal/network
+;interface = enp0s25
+;interval = 3.0
+;
+;format-connected-underline = #55aa55
+;format-connected-prefix = ""
+;format-connected-prefix-foreground = ${colors.foreground-alt}
+;label-connected = %local_ip%
+;
+;format-disconnected =
+;format-disconnected = <label-disconnected>
+;format-disconnected-underline = ${self.format-connected-underline}
+;label-disconnected = %ifname% disconnected
+;label-disconnected-foreground = ${colors.foreground-alt}
 
 [module/musicinfo]
 type = custom/script
@@ -185,8 +249,7 @@ time = "%a %b %d, %I:%M %p "
 
 time-alt = %H:%M
 
-format-prefix = " "
-format-prefix-foreground = ${colors.foreground-alt}
+format-prefix-foreground = ${colors.my_foreground}
 format-underline = ${colors.my_color5}
 
 label = %date% %time%
@@ -226,7 +289,6 @@ type = internal/battery
 battery = BAT0
 adapter = AC
 full-at = 99
-;
 
 ;format-full-background = ${colors.my_color4}
 format-full-background = ${colors.my_background}
@@ -322,6 +384,12 @@ screenchange-reload = true
 ;compositing-foreground = source
 ;compositing-border = over
 
+
+[global/wm]
+margin-top = 5
+margin-bottom = 5
+
+
 ; 
 ; [module/xkeyboard]
 ; type = internal/xkeyboard
@@ -354,10 +422,8 @@ screenchange-reload = true
 type = internal/xbacklight
 
 format = <label>
-format-prefix = " "
-format-prefix-foreground = ${colors.foreground-alt}
-format-underline = ${colors.my_color6}
-label = %percentage%%  
+format-prefix = " 
+label = BL %percentage%% | 
 
 bar-width = 10
 bar-indicator = |
@@ -395,33 +461,6 @@ card = intel_backlight
 
 ; vim:ft=dosini
 
-[module/pulseaudio]
-type = internal/pulseaudio
-
-; Sink to be used, if it exists (find using `pacmd list-sinks`, name field)
-; If not, uses default sink
-;sink = alsa_output.pci-0000_00_1f.3.analog-surround-51
-
-; Use PA_VOLUME_UI_MAX (~153%) if true, or PA_VOLUME_NORM (100%) if false
-use-ui-max = false
-
-; Interval for volume increase/decrease (in percent points)
-interval = 5
-
-format-volume = <ramp-volume><label-volume>
-format-muted = "<label-muted>  0%"
-#format-volume-underline = ${colors.underline-color}
-#format-ramp-underline = ${root.underline-color}
-#format-muted-underline = ${root.underline-color}
-ramp-volume-0 = 
-ramp-volume-1 = 
-ramp-volume-2 = 
-ramp-volume-foreground = ${colors.foreground-alt}
-
-label-muted = ""
-label-muted-foreground = ${colors.foreground-alt}
-label-volume = %percentage:2%%
-
 [module/xwindow]
 type = internal/xwindow
 label = %title:0:30:...%
@@ -429,5 +468,3 @@ label-padding = 10
 ;label-underline = ${colors.my_color7}
 label-foreground = ${colors.my_color4}
 ;label-foreground = ${colors.my_color7}
-
-; vim: set syntax=dosini:
