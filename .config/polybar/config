@@ -68,7 +68,7 @@ font-2 = Siji:pixelsize=10;0
 font-3 = icomoon\-feather:style=Regular:size=14;3
 
 modules-left = i3
-modules-right = wlan xbacklight battery date pulseaudio
+modules-right = eth date pulseaudio
 
 tray-position = right
 tray-padding = 2
@@ -137,9 +137,9 @@ label-urgent-background = ${colors.my_background}
 label-urgent-underline = ${colors.my_color8}
 label-urgent-padding = 2
 
-[module/wlan]
+[module/eth]
 type = internal/network
-interface = wlp60s0
+interface = enp3s0
 interval = 3.0
 
 format-connected-prefix = ""
@@ -220,50 +220,6 @@ label = %date% %time%
 ;bar-volume-empty = ─
 ;bar-volume-empty-font = 1
 ;bar-volume-empty-foreground = ${colors.my_color1}
-
-[module/battery]
-type = internal/battery
-battery = BAT0
-adapter = AC
-full-at = 99
-;
-
-;format-full-background = ${colors.my_color4}
-format-full-background = ${colors.my_background}
-format-charging-background = ${colors.my_background}
-format-charging = "⁣  <label-charging> <animation-charging> "
-format-charging-underline = ${colors.my_color2}
-
-;format-discharging-background = ${colors.my_color4}
-format-discharging-background = ${colors.my_background}
-format-discharging = "⁣ <label-discharging> <ramp-capacity> "
-format-discharging-underline = ${self.format-charging-underline}
-
-;format-full-prefix-foreground = ${colors.my_color4}
-format-full-prefix-foreground = ${colors.my_background}
-format-full-underline = ${self.format-charging-underline}
-
-format-charing-background = ${colors.my_background}
-
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-3 = 
-ramp-capacity-4 = 
-;ramp-capacity-foreground = ${colors.my_foreground}
-;ramp-capacity-foreground = ${colors.my_background}
-ramp-capacity-foreground = ${colors.my_foreground}
-
-animation-charging-0 = 
-animation-charging-1 = 
-animation-charging-2 = 
-animation-charging-3 = 
-animation-charging-4 = 
-;animation-charging-foreground = ${colors.my_foreground}
-;animation-charging-foreground = ${colors.my_background}
-animation-charging-foreground = ${colors.my_foreground}
-animation-charging-framerate = 750
-
 
 ;[module/temperature]
 ;type = internal/temperature
