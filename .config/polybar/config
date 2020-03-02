@@ -101,7 +101,7 @@ label-mode-background = ${colors.my_color4}
 ;   %index%
 ;   %output%
 ; Default: %icon%  %name%
-label-focused = %index%
+label-focused = %name%
 label-focused-foreground = ${colors.my_foreground}
 label-focused-background = #3f3f3f
 label-focused-underline = ${colors.my_color4}
@@ -112,7 +112,7 @@ label-focused-padding = 2
 ;   %icon%
 ;   %index%
 ; Default: %icon%  %name%
-label-unfocused = %index%
+label-unfocused = %name%
 label-unfocused-padding = 2
 label-unfocused-foreground = ${colors.my_foreground}
 label-unfocused-background = ${colors.my_background}
