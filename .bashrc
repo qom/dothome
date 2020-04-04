@@ -20,7 +20,8 @@ if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
 fi
 
 # Shell prompt format. Show git branch info.
-PS1="[\u@\h \e[38;5;178m\W\e[38;5;71m\$(__git_ps1 '(%s)')\e[39m]\$ "
+# RC prompt generator: http://bashrcgenerator.com/
+PS1="[\u@\h \[$(tput sgr0)\]\[\033[38;5;178m\]\W\[\e[38;5;71m\]\$(__git_ps1 '(%s)')\[$(tput sgr0)\]]\$ "
 
 # Basic prompt
 # PS1='[\u@\h \W]\$ '
