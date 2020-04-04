@@ -88,6 +88,8 @@ format = <label-state> <label-mode>
 ;strip-wsnumbers = true
 ;
 
+pin-workspaces = true
+
 ; Available tokens:
 ;   %mode%
 ; Default: %mode%
@@ -102,9 +104,11 @@ label-mode-background = ${colors.my_color4}
 ;   %output%
 ; Default: %icon%  %name%
 label-focused = %name%
-label-focused-foreground = ${colors.my_foreground}
-label-focused-background = #3f3f3f
-label-focused-underline = ${colors.my_color4}
+;label-focused-foreground = ${colors.my_foreground}
+label-focused-foreground = #111111
+;label-focused-background = #3f3f3f
+label-focused-background = ${colors.my_color12}
+;label-focused-underline = ${colors.my_color4}
 label-focused-padding = 2
 
 ; Available tokens:
@@ -122,16 +126,16 @@ label-unfocused-background = ${colors.my_background}
 ;   %icon%
 ;   %index%
 ; Default: %icon%  %name%
-label-visible = %index%
+label-visible = %name%
 label-visible-underline = ${colors.my_foreground}
-label-visible-padding = 4
+label-visible-padding = 2
 
 ; Available tokens:
 ;   %name%
 ;   %icon%
 ;   %index%
 ; Default: %icon%  %name%
-label-urgent = %index%
+label-urgent = %name%
 label-urgent-foreground = ${colors.my_foreground}
 label-urgent-background = ${colors.my_background}
 label-urgent-underline = ${colors.my_color8}

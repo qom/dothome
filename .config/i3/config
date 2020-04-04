@@ -104,6 +104,9 @@ bindsym $mod+a focus parent
 # rename workspace
 bindsym $mod+n exec i3-input -F 'rename workspace to "%s"' -P 'Rename to: '
 
+# move workspace to monitor (prompt to move left or right)
+bindsym $mod+m exec i3-input -F 'move workspace to output "%s"' -P 'Monitor direction: '
+
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
 set $ws1 "1"
@@ -128,6 +131,9 @@ bindsym $mod+7 workspace number 7
 bindsym $mod+8 workspace number 8
 bindsym $mod+9 workspace number 9
 bindsym $mod+0 workspace number 10
+
+# move container to workspace. Prompt for workspace name.
+bindsym $mod+Shift+m exec i3-input -F 'move container to workspace "%s"' -P 'Target workspace: '
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $ws1
@@ -188,7 +194,7 @@ bindsym XF86MonBrightnessDown exec "echo $((`cat /sys/class/backlight/intel_back
 #}
 
 # Start polybar
-exec_always --no-startup-id ~/.config/polybar/launch.sh &
+exec_always --no-startup-id ~/.config/polybar/launch_multi_monitor.sh &
 
 # Launch Citrix receiver in fullscreen mode
 for_window [class="Wfica"] fullscreen
@@ -202,3 +208,6 @@ exec $HOME/scripts/detect_and_configure_monitors
 
 # class                 border  backgr. text    indicator child_border
 client.focused          #4c9951 #4c9951 #000000 #2e9ef4   #4c9951
+
+# Make certain windows floating
+for_window [class="Wfica"] floating enable
