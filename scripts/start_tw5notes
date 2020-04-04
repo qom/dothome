@@ -7,9 +7,9 @@ cd "/project/wiki/tw5notes_new/"
 #external_ip=${external_ip%/}
 #echo "Determined external IP address: ${external_ip}"
 
-NODE_PATH=/usr/lib/node_modules/ tiddlywiki --server 8081 & echo $! > /tmp/tw5notes.pid
+#NODE_PATH=/usr/lib/node_modules/ tiddlywiki --server 8081 & echo $! > /tmp/tw5notes.pid
 
 # With node debug support via Chrome Dev Tools
-#NODE_PATH=/usr/lib/node_modules/ node --inspect /usr/bin/tiddlywiki --server 8081 & echo $! > /tmp/tw5notes.pid
+NODE_PATH=/usr/lib/node_modules/ node --inspect /usr/bin/tiddlywiki --server 8081 & echo $! > /tmp/tw5notes.pid
 
 notify-send -t 5000 "tw5notes" "server started"
