@@ -1,0 +1,7 @@
+#!/bin/bash
+
+ICAFILE=$HOME/Downloads/*.ica
+
+# Start Citrix receiver
+/opt/Citrix/ICAClient/wfica.sh $ICAFILE 
+rm $HOME/Downloads/*.ica
